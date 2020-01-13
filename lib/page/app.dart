@@ -1,3 +1,4 @@
+import 'package:back_to_desktop/back_to_desktop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_day/page/app_router.dart';
@@ -71,51 +72,58 @@ class _AppState extends State<App> with AutomaticKeepAliveClientMixin,TickerProv
   Widget build(BuildContext context) {
     super.build(context);
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff2E3132),
-        centerTitle: true,
-        elevation: 0,
-        title: Text(
-          "OneDay",
-          style: TextStyle(fontSize: ScreenUtil().setSp(35)),
-        ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                Icons.add_circle_outline,
-                color: Colors.white,
-                size: ScreenUtil().setSp(40),
-              ),
-              onPressed: (){
-                NavigatorUtils.push(context, AppRouter.addPage);
-              }
-          )
-        ],
-      ),
-      backgroundColor: Color(0xff2E3132),
-      body: SafeArea(
-        child: ListView.builder(
-          key: _listKey,
-          padding: EdgeInsets.only(
-            top: ScreenUtil().setWidth(30),
+    return WillPopScope(
+      onWillPop: () async {
+        await BackToDesktop.backToDesktop();
+        //important
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xff2E3132),
+          centerTitle: true,
+          elevation: 0,
+          title: Text(
+            "OneDay",
+            style: TextStyle(fontSize: ScreenUtil().setSp(35)),
           ),
-          physics: ClampingScrollPhysics(),
-          itemCount: _map['data'].length,
-          itemBuilder: (BuildContext context, int index) {
-            final Animation<double> animation =
-            Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: animationController,curve: Interval((1 / _map['data'].length) * index, 1.0, curve: Curves.fastOutSlowIn)));
-            animationController.forward();
-            return CustomCard(
-              title: _map['data'][index]['title'],
-              thumbnail: _map['data'][index]['thumbnail'],
-              tag: _map['data'][index]['tag'],
-              date: _map['data'][index]['date'],
-              isBig: _map['data'][index]['isBig']!= null ? _map['data'][index]['isBig'] : false,
-              animation: animation,
-              animationController: animationController,
-            );
-          },
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(
+                  Icons.add_circle_outline,
+                  color: Colors.white,
+                  size: ScreenUtil().setSp(40),
+                ),
+                onPressed: (){
+                  NavigatorUtils.push(context, AppRouter.addPage);
+                }
+            )
+          ],
+        ),
+        backgroundColor: Color(0xff2E3132),
+        body: SafeArea(
+          child: ListView.builder(
+            key: _listKey,
+            padding: EdgeInsets.only(
+              top: ScreenUtil().setWidth(30),
+            ),
+            physics: ClampingScrollPhysics(),
+            itemCount: _map['data'].length,
+            itemBuilder: (BuildContext context, int index) {
+              final Animation<double> animation =
+              Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: animationController,curve: Interval((1 / _map['data'].length) * index, 1.0, curve: Curves.fastOutSlowIn)));
+              animationController.forward();
+              return CustomCard(
+                title: _map['data'][index]['title'],
+                thumbnail: _map['data'][index]['thumbnail'],
+                tag: _map['data'][index]['tag'],
+                date: _map['data'][index]['date'],
+                isBig: _map['data'][index]['isBig']!= null ? _map['data'][index]['isBig'] : false,
+                animation: animation,
+                animationController: animationController,
+              );
+            },
+          ),
         ),
       ),
     );

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gesture_recognition/gesture_view.dart';
-import 'package:one_day/routers/fluro_navigator.dart';
-import 'package:one_day/routers/routers.dart';
 import 'package:one_day/utils/toast.dart';
 
 
