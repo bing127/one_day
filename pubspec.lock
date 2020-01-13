@@ -114,6 +114,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn"
+    source: hosted
+    version: "3.1.3"
   gesture_recognition:
     dependency: "direct main"
     description:
@@ -170,13 +177,6 @@ packages:
       url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn"
     source: hosted
     version: "0.0.4"
-  oktoast:
-    dependency: "direct main"
-    description:
-      name: oktoast
-      url: "https://dart-pub.mirrors.sjtug.sjtu.edu.cn"
-    source: hosted
-    version: "2.3.0"
   path:
     dependency: transitive
     description:
