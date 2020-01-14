@@ -1,26 +1,34 @@
 import 'dart:math' as math;
 
-import 'package:flustars/flustars.dart' show SpUtil;
 import 'package:flutter/material.dart';
-import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gesture_recognition/gesture_view.dart';
+import 'package:one_day/routers/fluro_navigator.dart';
 import 'package:one_day/utils/toast.dart';
+import 'package:flustars/flustars.dart' show SpUtil;
 
+class SettingLockPage extends StatefulWidget {
+  final String type;
 
-class LockPage extends StatefulWidget {
+  const SettingLockPage({
+    Key key,
+    this.type,
+  }) : super(key : key);
+
   @override
-  _LockPageState createState() => _LockPageState();
+  _SettingLockPageState createState() => _SettingLockPageState();
 }
 
-class _LockPageState extends State<LockPage> with SingleTickerProviderStateMixin{
+class _SettingLockPageState extends State<SettingLockPage> with SingleTickerProviderStateMixin {
   GlobalKey<GestureState> gestureStateKey = GlobalKey();
   AnimationController _animationController;
   CurvedAnimation _curvedAnimation;
   Animation<double> _animation;
   int _milliseconds = 500;
+  String _firstPwd;
+  String _secondPwd;
   String _tips;
-  int count = 0;
+
 
   @override
   void initState() {
@@ -41,6 +49,18 @@ class _LockPageState extends State<LockPage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xff2E3132),
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "手势密码",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: ScreenUtil().setSp(35)
+          ),
+        ),
+      ),
       backgroundColor: Color(0xff2E3132),
       body: Center(
         child: Column(
@@ -48,35 +68,7 @@ class _LockPageState extends State<LockPage> with SingleTickerProviderStateMixin
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      "http://img3.duitang.com/uploads/item/201511/18/20151118235332_ZasGS.thumb.700_0.jpeg",
-                    ),
-                    radius: ScreenUtil().setWidth(90),
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(20),
-                  ),
-                  Text(
-                    "张三",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ScreenUtil().setSp(35),
-                    ),
-                  )
-                ],
-              ),
-              margin: EdgeInsets.only(
-                bottom: ScreenUtil().setHeight(50)
-              ),
-            ),
-            Container(
-              height: ScreenUtil().setHeight(50),
+              height: ScreenUtil().setHeight(100),
               child: _tips!= null ? AnimatedBuilder(
                 animation: _animation,//添加动画
                 builder: (context, _) {
@@ -107,6 +99,9 @@ class _LockPageState extends State<LockPage> with SingleTickerProviderStateMixin
               },
               onPanDown: () {
                 gestureStateKey.currentState.selectColor = Color(0xff4FA760);
+                setState(() {
+                  _tips = null;
+                });
               },
             )
           ],
@@ -116,9 +111,6 @@ class _LockPageState extends State<LockPage> with SingleTickerProviderStateMixin
   }
 
   _analysisGesture(List<int> items){
-    if(count >=3){
-      return;
-    }
     if(items.length <3){
       setState(() {
         _tips = "至少连接三项";
@@ -126,26 +118,36 @@ class _LockPageState extends State<LockPage> with SingleTickerProviderStateMixin
       _animate();
       return;
     }
-    String code = SpUtil.getString("appIsFirst");
     String regCode = items.join("");
-    if(regCode == code){
-      AppLock.of(context).didUnlock();
-    } else {
-      setState(() {
-        count ++;
-      });
-      setState(() {
-        _tips = "密码错误，还可尝试$count次";
-      });
+    if(_firstPwd == null){
+     setState(() {
+       _firstPwd = regCode;
+       _tips = "再次确认";
+     });
       _animate();
-      if(count >=3){
+      return;
+    }
+    if(_secondPwd == null){
+      setState(() {
+        _secondPwd = regCode;
+      });
+      if(_secondPwd != _firstPwd){
         setState(() {
-          _tips = null;
+          _tips = "两次手势不一致";
         });
-        FlutterToast.show("跳转登录");
-        print("close");
+        _animate();
+        return;
       }
     }
+
+    FlutterToast.show(widget.type == '1' ? "设置成功" : "重置成功");
+
+    SpUtil.putString("appIsFirst", regCode);
+    SpUtil.putBool("appIsFirstStatus", true);
+    Future.delayed(Duration(milliseconds: 500),(){
+      NavigatorUtils.goBackWithParams(context,"success");
+    });
+
   }
 
   void _animate(){

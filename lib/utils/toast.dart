@@ -2,7 +2,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 /// Toast工具类
 class FlutterToast {
-  static show(String msg, {duration = 2000}) {
+  static show(String msg, {duration = 1000}) {
     if (msg == null){
       return;
     }
@@ -11,7 +11,7 @@ class FlutterToast {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIos: 1,
-        fontSize: 16.0
+        fontSize: 16.0,
     );
   }
 

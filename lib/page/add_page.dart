@@ -38,7 +38,6 @@ class _AddPageState extends State<AddPage> {
         title: Text(
           "编辑",
           style: TextStyle(
-              color: Colors.white,
               fontSize: ScreenUtil().setSp(35)
           ),
         ),

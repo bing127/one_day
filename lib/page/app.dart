@@ -1,4 +1,3 @@
-import 'package:back_to_desktop/back_to_desktop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_day/page/app_router.dart';
@@ -74,24 +73,33 @@ class _AppState extends State<App> with AutomaticKeepAliveClientMixin,TickerProv
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
     return WillPopScope(
       onWillPop: () async {
-        await BackToDesktop.backToDesktop();
+//        await BackToDesktop.backToDesktop();
         //important
         return false;
       },
       child: Scaffold(
+        backgroundColor: Color(0xff2E3132),
         appBar: AppBar(
-          backgroundColor: Color(0xff2E3132),
           centerTitle: true,
           elevation: 0,
+          backgroundColor: Color(0xff2E3132),
           title: Text(
             "OneDay",
             style: TextStyle(fontSize: ScreenUtil().setSp(35)),
+          ),
+          leading: IconButton(
+              icon: Icon(
+                Icons.tune,
+                size: ScreenUtil().setSp(40),
+              ),
+              onPressed: (){
+                NavigatorUtils.push(context, AppRouter.settingPage);
+              }
           ),
           actions: <Widget>[
             IconButton(
                 icon: Icon(
                   Icons.add_circle_outline,
-                  color: Colors.white,
                   size: ScreenUtil().setSp(40),
                 ),
                 onPressed: (){
@@ -100,7 +108,6 @@ class _AppState extends State<App> with AutomaticKeepAliveClientMixin,TickerProv
             )
           ],
         ),
-        backgroundColor: Color(0xff2E3132),
         body: SafeArea(
           child: ListView.builder(
             key: _listKey,

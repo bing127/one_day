@@ -24,150 +24,153 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
-    return Hero(
-      tag: widget.title,
-      child: Scaffold(
-        backgroundColor: Color(0xff2E3132),
-        appBar: AppBar(
+    return Material(
+      color: Colors.transparent,
+      child: Hero(
+        tag: widget.title,
+        child: Scaffold(
           backgroundColor: Color(0xff2E3132),
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
+          appBar: AppBar(
+            backgroundColor: Color(0xff2E3132),
+            elevation: 0,
+            centerTitle: true,
+            title: Text(
               widget.title,
               style: TextStyle(
-                color: Colors.white,
-                fontSize: ScreenUtil().setSp(35)
+                  color: Colors.white,
+                  fontSize: ScreenUtil().setSp(35)
               ),
-          ),
-        ),
-        body: SafeArea(
-          child: Container(
-            alignment: Alignment.topCenter,
-            padding: EdgeInsets.only(
-              top: ScreenUtil().setHeight(100)
             ),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  width: ScreenUtil().setWidth(500),
-                  height: ScreenUtil().setHeight(680),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: ScreenUtil().setHeight(600),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(ScreenUtil().setWidth(15)),
-                      color: Colors.white
-                    ),
-                    alignment: Alignment.bottomLeft,
-                    padding: EdgeInsets.only(
-                        bottom: ScreenUtil().setWidth(30),
-                        left: ScreenUtil().setWidth(20)
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: ScreenUtil().setHeight(15)
-                          ),
-                          child: Text(
-                            "${widget.title}",
-                            style: TextStyle(
-                                color: Color(0xff0C0C0C),
-                                fontSize: ScreenUtil().setSp(40),
-                                decoration: TextDecoration.none
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: ScreenUtil().setHeight(10)
-                          ),
-                          child: Text(
-                            "${widget.date}",
-                            style: TextStyle(
-                                color: Color(0xff757575),
-                                fontSize: ScreenUtil().setSp(30),
-                                decoration: TextDecoration.none
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+          ),
+          body: SafeArea(
+            child: Container(
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(100)
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    width: ScreenUtil().setWidth(500),
+                    height: ScreenUtil().setHeight(680),
                   ),
-                ),
-                Positioned(
-                  top: 0,
-                  left: ScreenUtil().setWidth(20),
-                  right: ScreenUtil().setWidth(20),
-                  child: Container(
-                    width: ScreenUtil().setWidth(460),
-                    height: ScreenUtil().setHeight(550),
-                    padding: EdgeInsets.only(
-                      bottom: ScreenUtil().setWidth(20),
-                      left: ScreenUtil().setWidth(20)
-                    ),
-                    alignment: Alignment.bottomLeft,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(15)),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                widget.thumbnail
-                            )
-                        )
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            "${_timeDiff(widget.date)}",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: ScreenUtil().setSp(80),
-                                decoration: TextDecoration.none
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: ScreenUtil().setHeight(600),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(ScreenUtil().setWidth(15)),
+                          color: Colors.white
+                      ),
+                      alignment: Alignment.bottomLeft,
+                      padding: EdgeInsets.only(
+                          bottom: ScreenUtil().setWidth(30),
+                          left: ScreenUtil().setWidth(20)
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(15)
                             ),
-                          ),
-                          margin: EdgeInsets.only(
-                              right: ScreenUtil().setWidth(15)
-                          ),
-                        ),
-                        ClipRRect(
-                          child: Container(
                             child: Text(
-                              "天后",
+                              "${widget.title}",
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: ScreenUtil().setSp(22),
+                                  color: Color(0xff0C0C0C),
+                                  fontSize: ScreenUtil().setSp(40),
                                   decoration: TextDecoration.none
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            color: Color(0xff4FA760),
-                            padding: EdgeInsets.only(
-                                left: ScreenUtil().setWidth(10),
-                                right: ScreenUtil().setWidth(10),
-                                top: ScreenUtil().setWidth(5),
-                                bottom: ScreenUtil().setWidth(5)
                             ),
                           ),
-                          borderRadius: BorderRadius.circular(ScreenUtil().setWidth(8)),
-                        ),
-                      ],
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(10)
+                            ),
+                            child: Text(
+                              "${widget.date}",
+                              style: TextStyle(
+                                  color: Color(0xff757575),
+                                  fontSize: ScreenUtil().setSp(30),
+                                  decoration: TextDecoration.none
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                )
-              ],
+                  Positioned(
+                    top: 0,
+                    left: ScreenUtil().setWidth(20),
+                    right: ScreenUtil().setWidth(20),
+                    child: Container(
+                      width: ScreenUtil().setWidth(460),
+                      height: ScreenUtil().setHeight(550),
+                      padding: EdgeInsets.only(
+                          bottom: ScreenUtil().setWidth(20),
+                          left: ScreenUtil().setWidth(20)
+                      ),
+                      alignment: Alignment.bottomLeft,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(ScreenUtil().setWidth(15)),
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  widget.thumbnail
+                              )
+                          )
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              "${_timeDiff(widget.date)}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenUtil().setSp(80),
+                                  decoration: TextDecoration.none
+                              ),
+                            ),
+                            margin: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(15)
+                            ),
+                          ),
+                          ClipRRect(
+                            child: Container(
+                              child: Text(
+                                "天后",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenUtil().setSp(22),
+                                    decoration: TextDecoration.none
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              color: Color(0xff4FA760),
+                              padding: EdgeInsets.only(
+                                  left: ScreenUtil().setWidth(10),
+                                  right: ScreenUtil().setWidth(10),
+                                  top: ScreenUtil().setWidth(5),
+                                  bottom: ScreenUtil().setWidth(5)
+                              ),
+                            ),
+                            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(8)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
+          bottomNavigationBar: _bottomAction(),
         ),
-        bottomNavigationBar: _bottomAction(),
       ),
     );
   }
