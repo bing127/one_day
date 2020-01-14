@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           debugShowMaterialGrid: false,
           title: 'OneDay - 勿忘日:计算日子的勿忘清单',
           theme: ThemeData(
-            fontFamily: 'WorkSans',
+            fontFamily: 'Roboto',
             brightness: Brightness.dark,
             scaffoldBackgroundColor: Color(0xff2E3132),
             canvasColor: Color(0xff2E3132),
