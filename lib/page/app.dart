@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_day/page/app_router.dart';
 import 'package:one_day/routers/fluro_navigator.dart';
+import 'package:one_day/utils/toast.dart';
 import 'package:one_day/widget/custom_card.dart';
 
 class App extends StatefulWidget {
@@ -49,6 +50,7 @@ class _AppState extends State<App> with AutomaticKeepAliveClientMixin,TickerProv
     ]
   };
   AnimationController animationController;
+  DateTime  _lastTime;
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
@@ -66,17 +68,22 @@ class _AppState extends State<App> with AutomaticKeepAliveClientMixin,TickerProv
     super.dispose();
   }
 
+  Future<bool> _isExit(){
+    if (_lastTime == null || DateTime.now().difference(_lastTime) > Duration(milliseconds: 2500)) {
+      _lastTime = DateTime.now();
+      FlutterToast.show("再次点击退出应用");
+      return Future.value(false);
+    }
+    FlutterToast.cancelToast();
+    return Future.value(true);
+  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
     return WillPopScope(
-      onWillPop: () async {
-//        await BackToDesktop.backToDesktop();
-        //important
-        return false;
-      },
+      onWillPop: _isExit,
       child: Scaffold(
         backgroundColor: Color(0xff2E3132),
         appBar: AppBar(
