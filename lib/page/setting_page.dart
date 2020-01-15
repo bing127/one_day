@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:one_day/page/app_router.dart';
 import 'package:one_day/routers/fluro_navigator.dart';
+import 'package:one_day/widget/custom_dialog.dart';
 import 'package:one_day/widget/custom_panel.dart';
 
 class SettingPage extends StatefulWidget {
@@ -133,6 +134,7 @@ class _SettingPageState extends State<SettingPage> {
             ],
           )
       ),
+      bottomNavigationBar: _bottomBtn(),
     );
   }
 
@@ -205,4 +207,111 @@ class _SettingPageState extends State<SettingPage> {
       ),
     );
   }
+
+  Widget _bottomBtn(){
+    return Container(
+      padding: EdgeInsets.only(
+          left: ScreenUtil().setWidth(30),
+          right: ScreenUtil().setWidth(30),
+          bottom: ScreenUtil().setWidth(30)
+      ),
+      height: ScreenUtil().setHeight(120),
+      child: FlatButton(
+        child: Text(
+          "退出登录",
+          style: TextStyle(
+              fontSize: ScreenUtil().setSp(35)
+          ),
+        ),
+        color: Color(0xff4FA760),
+        textColor: Colors.white,
+        onPressed: _quitLogin,
+      ),
+    );
+  }
+
+  void _quitLogin(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return CustomDialogWidget(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(
+                      top: ScreenUtil().setHeight(60),
+                      bottom: ScreenUtil().setHeight(60)
+                  ),
+                  child: Text(
+                    "您确定要退出登录吗？",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ScreenUtil().setSp(32)
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          top: BorderSide(
+                              color: Color(0xffE8EAF2),
+                              width: ScreenUtil().setWidth(1)
+                          )
+                      )
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      _btns(
+                        title: "取消",
+                        color: Color(0xFF999999)
+                      ),
+                      Container(
+                        height:ScreenUtil().setHeight(60),
+                        width: ScreenUtil().setWidth(1),
+                        color: Color(0xffE8EAF2),
+                      ),
+                      _btns(
+                          title: "确定",
+                         color: Color(0xff0F82FF),
+                        tap: (){
+                            NavigatorUtils.push(context, AppRouter.loginPage,clearStack: true);
+                        }
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
+
+  Widget _btns({ String title,Color color,GestureTapCallback tap }){
+    return Expanded(
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          onTap: tap,
+          child: Container(
+            alignment: Alignment.center,
+            height: ScreenUtil().setHeight(100),
+            child: Text(
+              title,
+              style: TextStyle(
+                color: color,
+                fontSize: ScreenUtil().setSp(32)
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

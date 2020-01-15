@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:one_day/page/app.dart';
 import 'package:one_day/page/lock_page.dart';
+import 'package:one_day/page/login_page.dart';
 import 'package:one_day/provider/theme_provider.dart';
 import 'package:one_day/routers/application.dart';
 import 'package:one_day/routers/routers.dart';
@@ -73,11 +74,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
           onGenerateRoute: Application.router.generator,
-          home: AppLock(
+          home: SpUtil.getObject("appUserInfo")!= null ? AppLock(
             builder: (args) =>App(),
             lockScreen: LockPage(),
             enabled: SpUtil.getBool("appIsFirstStatus"),
-          )
+          ) : LoginPage()
       ),
     );
   }
