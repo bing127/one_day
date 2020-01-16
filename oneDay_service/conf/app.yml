@@ -1,0 +1,41 @@
+#app.yml
+app:
+  name: OneDay官方
+  description: OneDay - 勿忘日:计算日子的勿忘清单
+
+db:
+  type: mysql
+  host: 127.0.0.1
+  user: root
+  password: 123456
+  port: 3306
+  table: oneday
+#  是否打印日志
+  log: true
+
+server:
+  port: 8989
+  read_timeout: 60
+  write_timeout: 60
+
+mail:
+  user: sc_1207@163.com
+  password: wxb1207oneday
+  host: smtp.163.com
+  port: 465
+
+model:
+  type: debug
+
+file:
+  path: static/upload/images/
+  max: 5
+  suffix: [.jpg,.jpeg,.png]
+
+redis:
+  Host: 127.0.0.1:6379
+  Password:
+  MaxIdle: 30
+  MaxActive: 30
+  IdleTimeout: 200
+
